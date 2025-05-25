@@ -26,12 +26,52 @@ class AlbumListScreen extends StatelessWidget {
               itemCount: albums.length,
               itemBuilder: (context, index) {
                 final album = albums[index];
-                return ListTile(
-                  title: Text(album.title),
-                  onTap: () {
-                    // Push the detail screen onto the stack
-                    context.push('/album/${album.id}');
-                  },
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    child: InkWell(
+                      onTap: () => context.push('/album/${album.id}'),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            // 1/10 for image
+                            Expanded(
+                              flex: 1,
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(6),
+                                  child: album.thumbnailUrl != null && album.thumbnailUrl!.isNotEmpty
+                                      ? Image.network(
+                                    album.thumbnailUrl!,
+                                    fit: BoxFit.cover,
+                                  )
+                                      : const Icon(Icons.image_not_supported),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            // 9/10 for text
+                            Expanded(
+                              flex: 9,
+                              child: Text(
+                                album.title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 );
               },
             );

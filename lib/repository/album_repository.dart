@@ -19,4 +19,8 @@ class AlbumRepository {
   Future<List<Photo>> getPhotosByAlbumId(int albumId) {
     return albumService.fetchPhotosByAlbumId(albumId);
   }
+
+  Future<List<Photo>> getPhotos() {
+    return albumService.fetchPhotos();
+  }
 }
